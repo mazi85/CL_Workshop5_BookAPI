@@ -31,8 +31,7 @@ public class MockBookService implements Service<Book> {
     public void create(Book book) {
         if (validateBook(book)) {
             list.add(book);
-        }
-        else {
+        } else {
             throw new NoSuchBookException("book parameters are invalid");
         }
     }
@@ -40,28 +39,37 @@ public class MockBookService implements Service<Book> {
     @Override
     public Book read(int id) {
         Book book = list.stream()
-                .filter(b->b.getId()==id)
+                .filter(b -> b.getId() == id)
                 .findAny().orElseThrow();
         return book;
     }
 
     @Override
     public void update(Book book) {
-
+        Book bookForUpd = list.stream()
+                .filter(b -> b.getId() == book.getId())
+                .findAny().orElseThrow();
+        int indexOf = list.indexOf(bookForUpd);
+        if (validateBook(book)) {
+            list.remove(bookForUpd);
+            list.add(indexOf, book);
+        } else {
+            throw new NoSuchBookException("book parameters are invalid");
+        }
     }
 
     @Override
     public void delete(int id) {
         Book book = list.stream()
-                .filter(b->b.getId()==id)
+                .filter(b -> b.getId() == id)
                 .findAny().orElseThrow();
         list.remove(book);
 
     }
 
     private boolean validateBook(Book book) {
-        if (book.getIsbn()==null || book.getAuthor()==null || book.getPublisher()==null
-                || book.getType()==null || book.getTitle()==null){
+        if (book.getIsbn() == null || book.getAuthor() == null || book.getPublisher() == null
+                || book.getType() == null || book.getTitle() == null) {
             return false;
         }
         return true;
