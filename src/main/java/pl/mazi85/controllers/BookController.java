@@ -1,12 +1,8 @@
 package pl.mazi85.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.mazi85.model.Book;
-import pl.mazi85.services.MockBookService;
 import pl.mazi85.services.Service;
 
 import java.util.List;
@@ -15,11 +11,11 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    Service<Book> mockBookService;
+    Service<Book> bookService;
 
     @Autowired
-    public BookController(Service<Book> mockBookService) {
-        this.mockBookService = mockBookService;
+    public BookController(Service<Book> bookService) {
+        this.bookService = bookService;
     }
 
     @RequestMapping("/helloBook")
@@ -30,15 +26,18 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Book> readBooks() {
-        return mockBookService.readAll();
+        return bookService.readAll();
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Book readBook(@PathVariable Integer id) {
-        return mockBookService.read(id);
+        return bookService.read(id);
     }
 
-
+    @RequestMapping(method = RequestMethod.POST)
+    public void saveBook(@RequestBody Book book) {
+            bookService.create(book);
+    }
 
 
 }

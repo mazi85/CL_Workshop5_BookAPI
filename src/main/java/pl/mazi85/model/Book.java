@@ -1,7 +1,7 @@
 package pl.mazi85.model;
 
 public class Book {
-
+    private static Long nextId = 4L;
     private long id;
     private String isbn;
     private String title;
@@ -16,6 +16,11 @@ public class Book {
         this.author = author;
         this.publisher = publisher;
         this.type = type;
+    }
+
+    public Book() {
+        setId(nextId);
+        nextId++;
     }
 
     public long getId() {
