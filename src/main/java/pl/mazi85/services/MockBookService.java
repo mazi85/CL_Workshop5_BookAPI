@@ -39,10 +39,10 @@ public class MockBookService implements Service<Book> {
 
     @Override
     public Book read(int id) {
-        if (id > list.size()) {
-            throw new NoSuchBookException("wrong id");
-        }
-        return list.get(id);
+        Book book = list.stream()
+                .filter(b->b.getId()==id)
+                .findAny().orElseThrow();
+        return book;
     }
 
     @Override
@@ -52,6 +52,11 @@ public class MockBookService implements Service<Book> {
 
     @Override
     public void delete(int id) {
+        Book book = list.stream()
+                .filter(b->b.getId()==id)
+                .findAny().orElseThrow();
+        list.remove(book);
+
     }
 
     private boolean validateBook(Book book) {
