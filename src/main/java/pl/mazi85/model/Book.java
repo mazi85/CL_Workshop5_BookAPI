@@ -7,15 +7,15 @@ public class Book {
     private String title;
     private String author;
     private String publisher;
-    private String description;
+    private String type;
 
-    public Book(long id, String isbn, String title, String author, String publisher, String description) {
+    public Book(long id, String isbn, String title, String author, String publisher, String type) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
-        this.description = description;
+        this.type = type;
     }
 
     public long getId() {
@@ -58,12 +58,12 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setType(String type) {
+        this.type = type;
     }
 
 }
