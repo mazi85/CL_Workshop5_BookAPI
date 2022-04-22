@@ -2,13 +2,14 @@ package pl.mazi85.services;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+import pl.mazi85.exceptions.NoSuchBookException;
 import pl.mazi85.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MockBookService {
+public class MockBookService implements Service<Book> {
     private static Long nextId = 4L;
     private List<Book> list;
     public MockBookService() {
@@ -20,14 +21,32 @@ public class MockBookService {
                 "programming"));
     }
 
-
+    @Override
     public List<Book> readAll(){
         return list;
     }
-    public void create(){}
-    public void read(){}
-    public void update(){}
-    public void delete(){}
+
+    @Override
+    public void create(Book book) {
+
+    }
+    @Override
+    public Book read(int id){
+        if(id>list.size()){
+            throw new NoSuchBookException("wrong id");
+        }
+        return list.get(id);
+    }
+
+    @Override
+    public void update(Book book) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
 
 
 
