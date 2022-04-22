@@ -6,7 +6,7 @@ public interface Service<T> {
 
     List<T> readAll();
     public void create(T t);
-    T read(int id);
+    T read(long id);
     void update(T t);
     void delete(int id);
 }

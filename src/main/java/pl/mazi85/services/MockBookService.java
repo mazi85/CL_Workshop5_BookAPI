@@ -1,7 +1,9 @@
 package pl.mazi85.services;
 
-import org.springframework.context.annotation.ComponentScan;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import pl.mazi85.exceptions.NoSuchBookException;
 import pl.mazi85.model.Book;
 
@@ -30,39 +32,44 @@ public class MockBookService implements Service<Book> {
     @Override
     public void create(Book book) {
         if (validateBook(book)) {
+            book.setId(nextId++);
             list.add(book);
         } else {
-            throw new NoSuchBookException("book parameters are invalid");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "book parameters are invalid"
+            );
         }
     }
 
     @Override
-    public Book read(int id) {
+    public Book read(long id) {
         Book book = list.stream()
                 .filter(b -> b.getId() == id)
-                .findAny().orElseThrow();
+                .findAny().orElseThrow(() -> {
+                    throw new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "entity not found"
+                    );
+                });
         return book;
     }
 
     @Override
     public void update(Book book) {
-        Book bookForUpd = list.stream()
-                .filter(b -> b.getId() == book.getId())
-                .findAny().orElseThrow();
+        Book bookForUpd = read(book.getId());
         int indexOf = list.indexOf(bookForUpd);
         if (validateBook(book)) {
             list.remove(bookForUpd);
             list.add(indexOf, book);
         } else {
-            throw new NoSuchBookException("book parameters are invalid");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "book parameters are invalid"
+            );
         }
     }
 
     @Override
     public void delete(int id) {
-        Book book = list.stream()
-                .filter(b -> b.getId() == id)
-                .findAny().orElseThrow();
+        Book book = read(id);
         list.remove(book);
 
     }

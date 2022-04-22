@@ -3,7 +3,7 @@ package pl.mazi85.model;
 import java.util.Objects;
 
 public class Book {
-    private static Long nextId = 4L;
+
     private long id;
     private String isbn;
     private String title;
@@ -21,8 +21,6 @@ public class Book {
     }
 
     public Book() {
-        setId(nextId);
-        nextId++;
     }
 
     public long getId() {
