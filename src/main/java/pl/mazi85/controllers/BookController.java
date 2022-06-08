@@ -3,7 +3,7 @@ package pl.mazi85.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.mazi85.model.Book;
-import pl.mazi85.services.Service;
+import pl.mazi85.services.BookService;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    Service<Book> bookService;
+   private final BookService<Book> bookService;
 
     @Autowired
-    public BookController(Service<Book> bookService) {
+    public BookController(BookService<Book> bookService) {
         this.bookService = bookService;
     }
 
