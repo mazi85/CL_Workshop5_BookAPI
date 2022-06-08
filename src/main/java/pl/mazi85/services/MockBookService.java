@@ -69,7 +69,7 @@ public class MockBookService implements BookService<Book> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         Book book = read(id);
         list.remove(book);
 

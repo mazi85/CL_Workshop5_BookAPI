@@ -8,5 +8,5 @@ public interface BookService<T> {
     public void create(T t);
     T read(long id);
     void update(T t);
-    void delete(int id);
+    void delete(Long id);
 }

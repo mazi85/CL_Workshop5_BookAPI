@@ -57,7 +57,7 @@ public class JpaBookService implements BookService<Book>  {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         bookRepository.delete(read(id));
 
     }
