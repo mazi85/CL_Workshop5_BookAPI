@@ -1,17 +1,18 @@
 package pl.mazi85.services;
 
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import pl.mazi85.exceptions.NoSuchBookException;
 import pl.mazi85.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
-
-@Component
-public class MockBookService implements Service<Book> {
+//@Primary
+@Service
+public class MockBookService implements BookService<Book> {
     private static Long nextId = 4L;
     private List<Book> list;
 
@@ -68,7 +69,7 @@ public class MockBookService implements Service<Book> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         Book book = read(id);
         list.remove(book);
 
