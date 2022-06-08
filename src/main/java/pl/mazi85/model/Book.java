@@ -1,10 +1,13 @@
 package pl.mazi85.model;
 
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
+@Table(name = "books")
 public class Book {
-
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String isbn;
     private String title;
     private String author;
